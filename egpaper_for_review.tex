@@ -230,6 +230,8 @@ When training the model, we used the pytorch framework, and the hardware environ
 \subsubsection{Result and analysis}
 In the experiment of hpa dataset, we carried out two comparison experiments. The first comparison experiment compared our model with two baseline models.The first baseline model, which we called Single-Instace model, is denoted as SI, SI adpots the traditional Single-input-Single-output model for training.During the test, multiple instances are input for several times, and the predicted result is output at the maximum value.The second baseline model is called multi-instance model, which is denoted as $MI_{mean}$, $MI_{mean}$ adopts the same training mode of multi-input and single-output as DRAGN, except that $MI_{mean}$ adopts the simple method of averaging multiple features for feature aggregation.The experimental results are shown in table 1. As can be seen from table 1, the result of SI model is extremely poor when applied to the multiple instances.By comparing the results of $MI_{mean}$ and SI models, it can be seen that the experimental result can be greatly improved by adopting the feature aggregation of simple averaging formula.The last column in the table 1 is the result of DRAGN model, which achieved the best results on all metrics.
 
+In the second set of comparative experiments, we compared the DRAGN model with the deep learning algorithms related to multiple instances aggregation.Here, we compared MVCNN, NAN, and SPoc\cite{ref28}, and the experimental results are shown in table 2.In the above deep learning algorithm, MVCNN takes the maximum value of multi-instance features to aggregate, NAN learned adaptive weights between multi-instance features by introducing an attentional mechanism, SPoc used radial basis functions to aggregate each feature of multi-instance features.By introducting feature aggregation unit, DRAGN uses the newly proposed cyclic convolution for feature aggregation.As shown in table 2, the experimental results of DRAGN show great advantages in many metrics, and the performance in a few metrics are almost the same as the highest results.
+
 %%%%%%%%%%%%% table 1 %%%%%%%%%%%%
 \begin{table}
 \normalsize
@@ -254,13 +256,15 @@ macro F1(\%) & 27.95 & 62.56 & \textbf{65.15} \\
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-Method & MVCNN & NAN & DAN & Ours \\
+Method & MVCNN & NAN & SPoc & Ours \\
 \hline\hline
-AUC(\%) &  &  &  &  \\
-macro precision(\%) &  &  &  & \\
-macro recall(\%) &  &  &  & \\
-macro F1(\%) &  &  &  &  \\
-micro F1(\%) &  &  &  & \\
+AUC(\%) & 96.08 & 95.86 & 93.35 & \textbf{96.56} \\
+macro precision(\%) & \textbf{91.58} & 81.43 & 79.21 & 90.13 \\
+macro recall(\%) & 53.59 & 50.85 & 45.86 & \textbf{56.06}\\
+macro F1(\%) & 62.75 & 58.18 & 54.72 & \textbf{65.15} \\
+micro F1(\%) & \textbf{81.79} & 77.82 & 75.97 & \textbf{81.69} \\
+sensitivity(\%) & 76.38 & 72.46 & 68.30 & \textbf{77.44} \\
+specificity(\%) & \textbf{99.48} & 99.31 & 99.42 & \textbf{99.39} \\
 \hline
 \end{tabular}
 \end{center}
@@ -285,6 +289,7 @@ As with the hpa dataset experiment, we use the pytorch framework to train the mo
 %%%%%% 4.2.4, Result and analysis %%%%%%
 \subsubsection{Result and analysis}
 
+%%%%%%%%%%%%% table 3 %%%%%%%%%%%%
 \begin{table}
 \footnotesize
 \begin{center}
@@ -312,6 +317,31 @@ $\textbf{Ours}$ & \textbf{94.77} & \textbf{74.74} & \textbf{74.79} \\
 
 The experimental results are shown in table 3, Here, we show all the relevant experimental results in the flyit paper in table3.At the same time, the experimental results of our model are also shown in the last row of table 3.As we can seen from table 3. as shown in the flyit paper, the flyit model has obvious advantages over other models, all of its metrics are generally higher than others.However, the metrics of our model are better than those of flyit. By comparing the result of the flyit model with those of DRAGN model in the last two lines of table 3, it can be seen that the model results of DRAGN exceed the result of flyit in all metrics, and there is a great improvement in macro F1 and micro F1 metrics.It can be seen from the above experimental results that, compared with the multi-instance stitching algorithm proposed by flyit, the feature aggregation algorithm proposed by DRAGN model has more advantages for the multi-instance problem.
 
+\textbf{Qualitative visualization.} In order to explore what changes the DRAGN model will bring to the features, here, we use the drosophila dataset for a visual presentation before and after feature aggregation.The specific approach is as follows: first, we obtained the features of drosophila data using resnet model, and then use tsne algorithm to reduce the dimensionality of these features to a two-dimensional plane, the dimensionality reduction results are shown in figure 6. Then we use DRAGN model to aggregate the features just extracted, and then we also use tsne algorithm to reduce dimensions to a two-dimensional plane, and the dimensionality resuction results are shown in figure 7.By comparing figure 6 and figure 7, it can be seen that the features of different categories before aggregation have small margin and large overlap, which brings great difficulties to subsequent classifiers.After aggregation, features of different categories are relatively separated, with a large margin, which is convenient for subsequent classifiers to make accurate classification.
+
+
+% 第6个图: 聚合前的分布
+\begin{figure}[t]
+\begin{center}
+% \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+  \includegraphics[width=0.9\linewidth]{original.JPG}
+\end{center}
+  \caption{the feature distribution before feature aggregation}
+\label{fig:long}
+\label{fig:onecol}
+\end{figure}
+
+
+% 第7个图: 聚合后的分布
+\begin{figure}[t]
+\begin{center}
+% \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+  \includegraphics[width=0.9\linewidth]{agg.JPG}
+\end{center}
+    \caption{the feature distribution after feature aggregation}
+\label{fig:long}
+\label{fig:onecol}
+\end{figure}
 %-------------------------------------------------------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% 5, Conclusion and Discussion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
