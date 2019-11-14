@@ -210,7 +210,7 @@ Assuming that there are n features in the input, in the first round of aggregati
 % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
   \includegraphics[width=1.0\linewidth]{agg_process.JPG}
 \end{center}
-%   \caption{Feature aggregation proces: L2Agg module and L3Agg module }
+  \caption{Two examples of Feature aggregation proceses}
 \label{fig:long}
 \label{fig:onecol}
 \end{figure}
@@ -374,7 +374,7 @@ The experimental results are shown in table 3, Here, we show all the relevant ex
 \label{fig:short}
 \end{figure*}
 
-\textbf{Visualize feature similarity.} In many feature aggregation model, the attention mechanism is introduced. These models learn the weight of multiple images through the attention mechanism, and then use these weights to combine the aggregated output. In our model, although we do not have an explicit attention mechanism, our output features will also focus on input features which have more information through our feature aggregation algorithm, thus making our model have an implicit attention mechanism. To prove this opinion, we conduct the following experiments, first, we use DRAGN to obtain the features before and after aggregation, then calculate the cosine similarity of the aggregated feature and the input feature, and take the cosine similarity as the score value of the input images, and then sort the score values in descending order to get figure 8. As we can seen from figure 8, the aggregated feature is more similar to the features whose images have more information, but less similar to the features whose images have less effective information. This means that the features aggregated by DRGAN will automatically focus on the important features, that is, our model have an implicit attention mechanism.
+\textbf{Visualize feature similarity.} In many feature aggregation model, the attention mechanism is introduced. These models learn the weight of multiple images through the attention mechanism, and then use these weights to combine the aggregated output. In our model, although we do not have an explicit attention mechanism, our output features will also focus on input features which have more information through our feature aggregation algorithm, thus making our model have an implicit attention mechanism. To prove this opinion, we conduct the following experiments, first, we use DRAGN to obtain the features before and after aggregation, then calculate the cosine similarity of the aggregated feature and the input feature, and take the cosine similarity as the score value of the input images, and then sort the score values in descending order to get figure 9. As we can seen from figure 9, the aggregated feature is more similar to the features whose images have more information, but less similar to the features whose images have less effective information. This means that the features aggregated by DRGAN will automatically focus on the important features, that is, our model have an implicit attention mechanism.
 
 %-------------------------------------------------------------------------
 
