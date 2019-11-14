@@ -96,7 +96,7 @@ Feature aggregation is fairly common in the field of computer vision. In video m
 %%%%%%%%% 第二个模块大图 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure*}
 \begin{center}
-\includegraphics[width=0.8\linewidth]{figure2.JPG}
+\includegraphics[width=0.8\linewidth]{framework.JPG}
 \end{center}
    \caption{The main model framework for the DRAGN that we proposed in our paper.}
 \label{fig:short}
@@ -121,7 +121,7 @@ In this section, we will introduce in detail about the main framework of the mod
 
 %%%%%%%%%%% 3.1 Framework %%%%%%%%%%%
 \subsection{Framework}
-In this section, we will describe the overall framework of the model DRAGN in detail, and the overall framework of the network is shown in figure 2. In this paper, two schemes for feature aggregation, pre-aggregation and post-aggregation, are proposed.
+In this section, we will describe the overall framework of the model DRAGN in detail, which is shown in figure 2. In this paper, two schemes for feature aggregation, pre-aggregation and post-aggregation, are proposed.
 
 %%%%%%%%%%% 3.1.1 post-aggregation %%%%%%%%%%%
 \subsubsection{Post-aggregation}
@@ -184,7 +184,7 @@ In this section, we will introduce the design of DRAGN's feature aggregation mod
 
 %%%%%%%%%%% 3.2.1 Feature aggregation unit %%%%%%%%%%%
 \subsubsection{Feature aggregation unit}
-According to the requirement of different network complexity, we proposed three feature aggregation units, namely, L1Agg, L2Agg, L3Agg, among which the somplest is L1Agg, whose network model is shown in figure 3. As shown in the figure, it contains a convolution layer that receives the input of three features and gives an output feature after convolution. The next is L2Agg and L3Agg. Their network models are shown in figure 4, their netowrk models are respectively consist of conv + BN + relu + conv, and conv + BN + relu + conv + BN + relu + conv. As you can see, they are identical in usage, except for the complexity of the network model.
+According to the requirement of different network complexity, we proposed three feature aggregation units, namely, L1Agg, L2Agg, L3Agg, among which the simplest is L1Agg, whose network model is shown in figure 3. As shown in the figure 3, it contains a convolution layer that receives the input of three features and gives an output feature after convolution. The next is L2Agg and L3Agg. Their network models are shown in figure 4, their netowrk models are respectively consist of conv + BN + relu + conv, and conv + BN + relu + conv + BN + relu + conv. As you can see, they are identical in usage, except for the complexity of the network model.
 
 % 第四个图: L2Agg 和 L3Agg
 \begin{figure}[t]
@@ -208,7 +208,7 @@ Assuming that there are n features in the input, in the first round of aggregati
 \begin{figure}[t]
 \begin{center}
 % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-  \includegraphics[width=1.0\linewidth]{algorithm.png}
+  \includegraphics[width=1.0\linewidth]{agg_process.JPG}
 \end{center}
 %   \caption{Feature aggregation proces: L2Agg module and L3Agg module }
 \label{fig:long}
@@ -341,7 +341,6 @@ The experimental results are shown in table 3, Here, we show all the relevant ex
 
 \textbf{Qualitative visualization.} In order to explore what changes the DRAGN model will bring to the features, here, we use the drosophila dataset for a visual presentation before and after feature aggregation. The specific approach is as follows: first, we obtained the features of drosophila data using resnet model, and then use tsne algorithm to reduce the dimensionality of these features to a two-dimensional plane, the dimensionality reduction results are shown in figure 6. Then we use DRAGN model to aggregate the features just extracted, and then we also use tsne algorithm to reduce dimensions to a two-dimensional plane, and the dimensionality resuction results are shown in figure 7.By comparing figure 6 and figure 7, it can be seen that the features of different categories before aggregation have small margin and large overlap, which brings great difficulties to subsequent classifiers. After aggregation, features of different categories are relatively separated, with a large margin, which is convenient for subsequent classifiers to make accurate classification.
 
-
 % 第6个图: 聚合前的分布
 \begin{figure}[t]
 \begin{center}
@@ -364,6 +363,19 @@ The experimental results are shown in table 3, Here, we show all the relevant ex
 \label{fig:long}
 \label{fig:onecol}
 \end{figure}
+
+
+% 第8个图: 可视化权重
+\begin{figure*}
+\begin{center}
+\includegraphics[width=0.8\linewidth]{flycompare.JPG}
+\end{center}
+   \caption{The weight distribution between the aggregated feature and the original images.}
+\label{fig:short}
+\end{figure*}
+
+\textbf{Visualize feature similarity.} In many feature aggregation model, the attention mechanism is introduced. These models learn the weight of multiple images through the attention mechanism, and then use these weights to combine the aggregated output. In our model, although we do not have an explicit attention mechanism, our output features will also focus on input features which have more information through our feature aggregation algorithm, thus making our model have an implicit attention mechanism. To prove this opinion, we conduct the following experiments, first, we use DRAGN to obtain the features before and after aggregation, then calculate the cosine similarity of the aggregated feature and the input feature, and take the cosine similarity as the score value of the input images, and then sort the score values in descending order to get figure 8. As we can seen from figure 8, the aggregated feature is more similar to the features whose images have more information, but less similar to the features whose images have less effective information. This means that the features aggregated by DRGAN will automatically focus on the important features, that is, our model have an implicit attention mechanism.
+
 %-------------------------------------------------------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% 5, Conclusion and Discussion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
